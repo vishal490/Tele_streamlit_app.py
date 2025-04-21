@@ -150,5 +150,15 @@ if st.button("Save Review"):
     with open(review_file, "a") as f:
         f.write(f"{selected_case},{relevant_resp},{correct},{'|'.join(relevant)},{'|'.join(irrelevant)},{comment}\n")
     st.success(f"Review saved to {review_file}!")
+review_file = f"doctor_reviews_{os.path.splitext(selected_file)[0]}.csv"
 
+if os.path.exists(review_file):
+    with open(review_file, "rb") as f:
+        st.download_button(
+            label="Download Reviews",
+            data=f,
+            file_name=review_file,
+            mime="text/csv"
+        )
+        
 st.caption("You can review and annotate each simulation case. All reviews are saved to doctor_reviews.csv.")
