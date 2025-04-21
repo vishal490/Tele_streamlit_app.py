@@ -120,7 +120,7 @@ st.header("Doctor Annotation")
 
 relevant_resp = st.radio("Were the symptom questions relevant?", ["Yes", "Partially", "No"])
 asked_with_status = get_asked_symptoms_with_status(case.get('conversation_history', []))
-
+asked_with_status=set(asked_with_status)
 relevant = []
 irrelevant = []
 
