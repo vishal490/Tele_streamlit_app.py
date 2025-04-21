@@ -46,7 +46,7 @@ def get_asked_symptoms_with_status(conversation_history):
         i += 1
     return asked
 # List your simulation files
-SIM_FILES = ["Medbot.json", "Baseline2.json"]  # Update with your actual file names
+SIM_FILES = ["Medbot.json", "Baseline1.json"]  # Update with your actual file names
 
 selected_file = st.selectbox("Select simulation file to review", SIM_FILES)
 
