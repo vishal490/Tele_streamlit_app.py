@@ -90,6 +90,7 @@ case = sim_data.get(selected_case, {})
 # --- Display Symptoms and Prediction ---
 st.subheader("Symptoms Actually Asked by MedBot (with Patient Response)")
 asked_with_status = get_asked_symptoms_with_status(case.get('conversation_history', []))
+asked_with_status=set(asked_with_status)
 if asked_with_status:
     for symptom, status in asked_with_status:
         st.write(f"{symptom}: {status}")
