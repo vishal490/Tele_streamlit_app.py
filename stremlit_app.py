@@ -322,7 +322,6 @@ with col_center:
         # If "None" is selected, consider all symptoms as irrelevant
         # Add a "None of the symptoms is relevant" option at the top
         none_relevant = st.checkbox("None of the symptoms is relevant", key="rel_none")
-        relevant = []
         irrelevant = [symptom for symptom, _ in asked_with_status]
 
         correct = st.select_slider(
