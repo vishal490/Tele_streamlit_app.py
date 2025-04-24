@@ -152,11 +152,12 @@ def clean_disease_name(disease_key):
     cleaned = cleaned.strip()
     return cleaned
 
-def all_fields_filled(relevant_resp, correct, comment, relevant):
+def all_fields_filled(relevant_resp, correct, comment, relevant, none_relevant):
     # relevant_resp and correct are always set due to defaults
     if comment is None or comment.strip() == "":
         return False
-    if not relevant:  # Must have at least one relevant symptom checked
+    # Either some symptoms must be marked as relevant OR "None" must be selected
+    if not relevant and not none_relevant:
         return False
     return True
 
@@ -306,12 +307,23 @@ with col_center:
         irrelevant = []
 
         st.write("Please select the symptoms below (which are asked by AI Doctor to get correct dignosis), you think are relevent symptoms for correct diagnosis. Unselected will be considered irrelevant.")
+
+        
+
+        # Only show individual symptom checkboxes if "None" is not selected
+        
         for symptom, status in asked_with_status:
             checked = st.checkbox(f"{symptom}", key=f"rel_{symptom}")
             if checked:
                 relevant.append(symptom)
             else:
                 irrelevant.append(symptom)
+    
+        # If "None" is selected, consider all symptoms as irrelevant
+        # Add a "None of the symptoms is relevant" option at the top
+        none_relevant = st.checkbox("None of the symptoms is relevant", key="rel_none")
+        relevant = []
+        irrelevant = [symptom for symptom, _ in asked_with_status]
 
         correct = st.select_slider(
             "How well did the AI's top 10 disease predictions match the true/likely diagnosis?",
@@ -333,8 +345,11 @@ with col_center:
 
         # Move validation inside the form submission logic
         if save_review:
+            if none_relevant:
+                # Add a special marker in the saved data
+                relevant = ["NONE_RELEVANT"]
             # Check validation after button is clicked
-            if all_fields_filled(relevant_resp, correct, comment, relevant):
+            if all_fields_filled(relevant_resp, correct, comment, relevant,none_relevant):
                 review = {
                     "case": selected_case,
                     "relevant": relevant_resp,
