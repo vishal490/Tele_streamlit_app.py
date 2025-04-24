@@ -326,16 +326,16 @@ with col_center:
         irrelevant = [symptom for symptom, _ in asked_with_status]
 
         correct = st.select_slider(
-            "How well did the AI's top 10 disease predictions match the true/likely diagnosis?",
+            "How accurate do you find the predicted disease?",
             options=[1, 2, 3, 4, 5],
             value=3,
             key="correct",
             format_func=lambda x: {
-                1: "1 - Not at all correct",
-                2: "2 - Slightly correct",
-                3: "3 - Moderately correct",
+                1: "1 - Not at all Correct",
+                2: "2 - Slightly Well",
+                3: "3 - Moderately well",
                 4: "4 - Mostly correct",
-                5: "5 - Perfectly correct"
+                5: "5 - Perfectly Diagnosed"
             }[x],
             help="1 = Not at all correct, 5 = Perfectly correct"
         )
